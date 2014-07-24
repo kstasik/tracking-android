@@ -61,6 +61,7 @@ public class LoginActivity extends GcmActivity{
     }
 
     static class DeviceRequest {
+        String name;
         String username;
         String password;
         String system;
@@ -297,6 +298,8 @@ public class LoginActivity extends GcmActivity{
             }
             else{
                 Log.d(TAG, "API KEY Incorrect");
+
+                Toast.makeText(LoginActivity.this, "Api Key Invalid", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -332,10 +335,20 @@ public class LoginActivity extends GcmActivity{
             RegisterDevice registration = restAdapter.create(RegisterDevice.class);
 
             DeviceRequest rq = new DeviceRequest();
+
             rq.username = mUsername;
             rq.password = mPassword;
             rq.reg_id   = regid;
             rq.system   = "android";
+
+            // get device info
+            String manufacturer = Build.MANUFACTURER;
+            String model = Build.MODEL;
+            if (model.startsWith(manufacturer)) {
+                rq.name = model;
+            }else{
+                rq.name = manufacturer + " " + model;
+            }
 
             try {
                 DeviceResponse device = registration.create(rq);
