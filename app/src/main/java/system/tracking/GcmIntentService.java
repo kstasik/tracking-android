@@ -2,9 +2,6 @@ package system.tracking;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -49,8 +46,11 @@ public class GcmIntentService extends IntentService {
                 if(message.action.equals("is_near_object")){
                     handleIsNearObject(message.id, message.parameters);
                 }
-                else if(message.action.equals("alert")){
+                else if(message.action.equals("alert") || message.action.equals("alert_critical") || message.action.equals("alert_in_move")){
                     handleAlert(message.id, message.parameters);
+                }
+                else{
+                    Log.d(TAG, "unknown message type: "+message.action);
                 }
             }
         }

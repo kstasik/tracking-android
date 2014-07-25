@@ -145,6 +145,9 @@ public class StatusActivity extends GcmActivity {
             builder.setMessage(getIntent().getStringExtra("message"))
                     .setTitle(R.string.alert_title);
 
+
+            Log.d(TAG, "ALARM message: "+getIntent().getStringExtra("message"));
+
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
