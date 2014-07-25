@@ -2,16 +2,21 @@ package system.tracking;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 
 public class GcmActivity extends Activity {
+    public static final String DEFAULT_API_URL = "http://tracking.dev/app_dev.php";
 
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
@@ -156,6 +161,9 @@ public class GcmActivity extends Activity {
         return registrationId;
     }
 
+    public static String getApiUrl(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getString("api_url", GcmActivity.DEFAULT_API_URL);
+    }
 
     /**
      * Stores the api key in the application's
@@ -169,5 +177,26 @@ public class GcmActivity extends Activity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PROPERTY_API_KEY, key);
         editor.commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.status, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

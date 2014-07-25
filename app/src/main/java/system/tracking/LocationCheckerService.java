@@ -102,7 +102,7 @@ public class LocationCheckerService extends Service {
         @Override
         protected Boolean doInBackground(Void... params) {
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(LoginActivity.API_URL)
+                    .setEndpoint(GcmActivity.getApiUrl(LocationCheckerService.this))
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .build();
 

@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.Ringtone;
@@ -185,25 +186,6 @@ public class StatusActivity extends GcmActivity {
         public void onNothingSelected(AdapterView<?> parentView) {}
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.status, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     void getObjects(){
         if (mGetObjects != null) {
             return;
@@ -237,7 +219,7 @@ public class StatusActivity extends GcmActivity {
             Log.d(TAG, "create status request");
 
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(LoginActivity.API_URL)
+                    .setEndpoint(GcmActivity.getApiUrl(StatusActivity.this))
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .build();
 
@@ -320,7 +302,7 @@ public class StatusActivity extends GcmActivity {
         @Override
         protected List<String> doInBackground(Void... params) {
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(LoginActivity.API_URL)
+                    .setEndpoint(GcmActivity.getApiUrl(StatusActivity.this))
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .build();
 

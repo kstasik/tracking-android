@@ -50,8 +50,6 @@ public class LoginActivity extends GcmActivity{
     private View mProgressView;
     private View mLoginFormView;
 
-    public static final String API_URL = "http://tracking.dev/app_dev.php";
-
     interface RegisterDevice {
         @POST("/api/v1/devices.json")
         DeviceResponse create(@Body DeviceRequest device); // , Callback<DeviceResponse> cb
@@ -268,7 +266,7 @@ public class LoginActivity extends GcmActivity{
         @Override
         protected Boolean doInBackground(Void... params) {
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(API_URL)
+                    .setEndpoint(GcmActivity.getApiUrl(LoginActivity.this))
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .build();
 
@@ -328,7 +326,7 @@ public class LoginActivity extends GcmActivity{
             Log.d("MyApp", "attempt login");
 
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(API_URL)
+                    .setEndpoint(GcmActivity.getApiUrl(LoginActivity.this))
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .build();
 
